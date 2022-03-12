@@ -1,12 +1,12 @@
-# Gapminder Challenge App
+# Gapminder Challenge R App
 
-Link to the app: https://gapminder-challenge.herokuapp.com/
+Link to the app: TODO
 
 ![](images/gapminder_animation.gif)
 
 ## Welcome!
 
-Thank you for visiting the Gapminder Challenge app project repository.
+Thank you for visiting the Gapminder Challenge R app project repository.
 
 This document is aimed to give you some information about our project. You can either jump straight to one of the sections below or scroll down to find out more.
 
@@ -19,7 +19,7 @@ This document is aimed to give you some information about our project. You can e
 
 ### The App
 
-Our app is hosted on Heroku. Take the challenges [here](https://gapminder-challenge.herokuapp.com/) to see how you understand global issues. You will be able to:
+Our app is hosted on Heroku. Take the challenges [here](TODO) to see how you understand global issues. You will be able to:
 
 * know immediately if your worldview is up-to-date
 
@@ -62,6 +62,7 @@ For this project, we used `Dash` for dashboarding, `Altair` and `Plotly` for cha
 ## License and Contributors
 
 `gapminder_challenge` was created by:
+
 * Son Chau
 
 * Julien Gordon
@@ -71,7 +72,3 @@ For this project, we used `Dash` for dashboarding, `Altair` and `Plotly` for cha
 * Vanessa Yuen
 
 It is licensed under the terms of the MIT license.
-
-## Credits
-
-`gapminder_challenge` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
