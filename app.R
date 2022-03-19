@@ -18,6 +18,9 @@ df_year_region <- df %>%
     group_by(year, region) %>%
     summarise(sum_co2_per_capita = sum(co2_per_capita))
 
+df_subregion_year <- df %>%
+  group_by(sub_region, year) %>%
+  summarise(mean_life_expectancy = mean(life_expectancy))
 
 marks_card2 <- list("1918" = "1918", 
                 "1928" = "1928",
@@ -143,9 +146,37 @@ app$layout(
             ),
             dbcRow(
                 list(
-                    dbcCol(dbcCard(className = "m-3 p-3",div(
-                        "Card 3"
-                    )), md = 6),
+                    dbcCol(dbcCard(className = "m-3 p-3", 
+                                   list(
+                                     dccGraph(id = "line_chart_3"),
+                                     dccRangeSlider(
+                                       id = "slider_3",
+                                       min = 1918,
+                                       max = 2018,
+                                       step = 10,
+                                       marks = list(
+                                         "1918" = "1918",
+                                         "1928" = "1928",
+                                         "1938" = "1938",
+                                         "1948" = "1948",
+                                         "1958" = "1958",
+                                         "1968" = "1968",
+                                         "1978" = "1978",
+                                         "1988" = "1988",
+                                         "1998" = "1998",
+                                         "2008" = "2008",
+                                         "2018" = "2018"
+                                       ),
+                                       value = list(1938, 2018)
+                                     ),
+                                     dccDropdown(
+                                       id = "dropdown_3",
+                                       options = unique(df_subregion_year$sub_region),
+                                       value = unique(df_subregion_year$sub_region)[15],
+                                       multi = TRUE
+                                     )
+                                   )
+                    ), md = 6),
                     dbcCol(dbcCard(className = "m-3 p-3",div(
                         "Card 4"
                     )), md = 6)
@@ -184,92 +215,117 @@ app$callback(
     }
 )
 
-###### Card 4 #####
-# Read in the raw data and subset the data for analysis
-card4_df <- readr::read_csv(here::here('data', 'raw', 'combined-data-for-GDP-per-cap.csv'))
-
-# Define constant values
-years <- list("1960" = "1960",
-              "1968" = "1968",
-              "1978" = "1978",
-              "1988" = "1988",
-              "1998" = "1998",
-              "2008" = "2008",
-              "2018" = "2018"
-)
-regions <- list(list(label = "All", value = ''),
-                list(label = "Asia", value = "Asia"),
-                list(label = "Europe", value = "Europe"),
-                list(label = "Africa", value = "Africa"),
-                list(label = "Americas", value = "Americas"),
-                list(label = "Oceania", value = "Oceania"))
-
-COUNTRIES <- unique(df$country)
-
-app$layout(
-  dbcContainer(
-    list(
-      dccGraph(id='plot-area'),
-      htmlLabel("Zoom in Years: "),
-      dccRangeSlider(
-        id = 'year_slider',
-        min = 1960, 
-        max = 2018,
-        step = 1,
-        value = list(1960, 2018),
-        marks = years,
-        tooltip = 'placement'
-      ),
-      htmlLabel("Filter by Geographic Region: "),
-      dccDropdown(
-        id = 'region_dropdown',
-        options = regions,
-        value = '',
-        multi = TRUE)
-    )
-  )
-)
-
+# card 3
 app$callback(
-  output('plot-area', 'figure'),
-  list(input('year_slider', 'value'),
-       input('region_dropdown', 'value')),
-  
-  function(year_range, region_filter) {
-    df_sub <- card4_df %>%
-      filter(year >= year_range[1] & year <= year_range[2])
-    
-    if ('' %in% region_filter) {
-      p <- df_sub %>%
-        group_by(year) %>%
-        summarise(income = sum(`GDP total`),
-                  pop = sum(population)) %>%
-        mutate(income_per_capita = income / pop) %>%
-        ggplot(aes(x = year, y = income_per_capita)) +
-        geom_line() +
-        labs(x = "Year",
-             y = "income Per Capita (in US$)",
-             title = "income Per Capita Has Been Rising") +
-        ggthemes::scale_color_tableau()
-    } else {
-      df_sub <- df_sub %>%
-        filter(region %in% region_filter)
-      p <- df_sub %>%
-        group_by(year, region) %>%
-        summarise(income = sum(`GDP total`),
-                  pop = sum(population)) %>%
-        mutate(income_per_capita = income / pop) %>%
-        ggplot(aes(x = year, y = income_per_capita, color=region)) +
-        geom_line() +
-        labs(x = "Year",
-             y = "income Per Capita (in US$)",
-             title = "Income Per Capita Has Been Rising") +
-        ggthemes::scale_color_tableau()
-    }
-    ggplotly(p)
-    
+  output("line_chart_3", "figure"),
+  list(
+    input("slider_3", "value"),
+    input("dropdown_3", "value")
+  ),
+  function(selected_year, selected_regions) {
+    title_text = paste0("Mean Life Expectancy from ",
+                        as.character(selected_year[1]),
+                        " to ",
+                        as.character(selected_year[2]))
+    p <- ggplot(df_subregion_year %>%
+                  filter(year >= selected_year[1], year <= selected_year[2],
+                         sub_region %in% selected_regions)) +
+      aes(y = mean_life_expectancy,
+          x = year, color = sub_region) +
+      geom_line() +
+      labs(x = "Year", y = "Mean Life Expectancy") +
+      theme_bw(base_size = 13) +
+      ggtitle(title_text)
+    ggplotly(p) %>% layout()
   }
 )
+
+###### Card 4 #####
+# Read in the raw data and subset the data for analysis
+# card4_df <- readr::read_csv(here::here('data', 'raw', 'combined-data-for-GDP-per-cap.csv'))
+# 
+# # Define constant values
+# years <- list("1960" = "1960",
+#               "1968" = "1968",
+#               "1978" = "1978",
+#               "1988" = "1988",
+#               "1998" = "1998",
+#               "2008" = "2008",
+#               "2018" = "2018"
+# )
+# regions <- list(list(label = "All", value = ''),
+#                 list(label = "Asia", value = "Asia"),
+#                 list(label = "Europe", value = "Europe"),
+#                 list(label = "Africa", value = "Africa"),
+#                 list(label = "Americas", value = "Americas"),
+#                 list(label = "Oceania", value = "Oceania"))
+# 
+# COUNTRIES <- unique(df$country)
+
+# app$layout(
+#   dbcContainer(
+#     list(
+#       dccGraph(id='plot-area'),
+#       htmlLabel("Zoom in Years: "),
+#       dccRangeSlider(
+#         id = 'year_slider',
+#         min = 1960, 
+#         max = 2018,
+#         step = 1,
+#         value = list(1960, 2018),
+#         marks = years,
+#         tooltip = 'placement'
+#       ),
+#       htmlLabel("Filter by Geographic Region: "),
+#       dccDropdown(
+#         id = 'region_dropdown',
+#         options = regions,
+#         value = '',
+#         multi = TRUE)
+#     )
+#   )
+# )
+# 
+# app$callback(
+#   output('plot-area', 'figure'),
+#   list(input('year_slider', 'value'),
+#        input('region_dropdown', 'value')),
+#   
+#   function(year_range, region_filter) {
+#     df_sub <- card4_df %>%
+#       filter(year >= year_range[1] & year <= year_range[2])
+#     
+#     if ('' %in% region_filter) {
+#       p <- df_sub %>%
+#         group_by(year) %>%
+#         summarise(income = sum(`GDP total`),
+#                   pop = sum(population)) %>%
+#         mutate(income_per_capita = income / pop) %>%
+#         ggplot(aes(x = year, y = income_per_capita)) +
+#         geom_line() +
+#         labs(x = "Year",
+#              y = "income Per Capita (in US$)",
+#              title = "income Per Capita Has Been Rising") +
+#         ggthemes::scale_color_tableau()
+#     } else {
+#       df_sub <- df_sub %>%
+#         filter(region %in% region_filter)
+#       p <- df_sub %>%
+#         group_by(year, region) %>%
+#         summarise(income = sum(`GDP total`),
+#                   pop = sum(population)) %>%
+#         mutate(income_per_capita = income / pop) %>%
+#         ggplot(aes(x = year, y = income_per_capita, color=region)) +
+#         geom_line() +
+#         labs(x = "Year",
+#              y = "income Per Capita (in US$)",
+#              title = "Income Per Capita Has Been Rising") +
+#         ggthemes::scale_color_tableau()
+#     }
+#     ggplotly(p)
+#     
+#   }
+# )
 
 app$run_server(host = "0.0.0.0")
 
