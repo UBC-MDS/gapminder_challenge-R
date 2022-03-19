@@ -119,6 +119,7 @@ app$layout(
             className = "m-3 p-3",
             list(
               dccGraph(id = "bar_chart"),
+              htmlLabel("Select year:"),
               dccSlider(
                 id = "slider",
                 min = 1914,
@@ -139,6 +140,7 @@ app$layout(
                 ),
                 value = 1914,
               ),
+              htmlLabel("Select regions:"),
               dccDropdown(
                 id = "dropdown",
                 options = c(
@@ -182,6 +184,7 @@ app$layout(
             className = "m-3 p-3",
             list(
               dccGraph(id = "line_chart_3"),
+              htmlLabel("Zoom in Years: "),
               dccRangeSlider(
                 id = "slider_3",
                 min = 1918,
@@ -202,6 +205,7 @@ app$layout(
                 ),
                 value = list(1938, 2018)
               ),
+              htmlLabel("Filter by  Sub-Region: "),
               dccDropdown(
                 id = "dropdown_3",
                 options = unique(df_subregion_year$sub_region),
