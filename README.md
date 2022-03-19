@@ -11,6 +11,7 @@ Thank you for visiting the Gapminder Challenge R app project repository!
 This document is aimed to give you some information about our project. You can either jump straight to one of the sections below or scroll down to find out more.
 
 * [About this project](#about-this-project)
+* [Installation](#installation)
 * [Get Involved](#get-involved)
 * [License and Contributors](#license-and-contributors)
 
@@ -35,6 +36,21 @@ This project is designed to augment the existing gapminder [worldview upgrader](
 ### Dashboard Description
 
 Our app features a single page that hosts four interactive data visualization plots by a 2 by 2 layout. Each plot is associated with one question that evaluates the users' understanding of global development since 1900s. The topics include child birth rate, child mortality vs. income level, average life expectancy, and income per capita. Each plot has its own controls, such as sliders for year range and drop-down menus for country, region, and income group selections. These components allow the users to explore and manipulate the data supporting the answers to the questions, offering a dynamic and enriched learning experience.
+
+## Installation
+
+1. Clone this repo to your computer and navigate to the root folder:
+```bash
+git clone https://github.com/UBC-MDS/gapminder_challenge-R.git
+cd gapminder_challenge-R
+```
+
+2. Enter the following command to run the app:
+``` bash
+Rscript app.R
+```
+
+3.  Copy the address printed to your browser to view the app on your local host.
 
 ## Get Involved
 
