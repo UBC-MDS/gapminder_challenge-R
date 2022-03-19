@@ -38,12 +38,13 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be repor
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
 
-## Contact
-The project team can be contacted at any of the following:
-  * imtvwy@gmail.com
-  * soncqb@gmail.com
-  * irene93@student.ubc.ca
-  * junigord@gmail.com
+## Team Contact
+| Team Member | Contact Information |
+|------------------- |-------------------|
+| Son Chau | soncqb@gmail.com |
+| Julien Gordon | junigord@gmail.com |
+| Irene Yan | irene93@student.ubc.ca |
+| Vanessa Yuen | imtvwy@gmail.com |
 
 ## Attribution
 
