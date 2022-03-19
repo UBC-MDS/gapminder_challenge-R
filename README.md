@@ -11,7 +11,6 @@ Thank you for visiting the Gapminder Challenge R app project repository!
 This document is aimed to give you some information about our project. You can either jump straight to one of the sections below or scroll down to find out more.
 
 * [About this project](#about-this-project)
-* [Installation](#installation)
 * [Get Involved](#get-involved)
 * [License and Contributors](#license-and-contributors)
 
@@ -42,14 +41,6 @@ Our app features a single page that hosts four interactive data visualization pl
 Our app is still under active development. We'd love your feedback along the way.
 
 Interested in contributing? We can certainly use your expertise in user experience design, data validation, front end development, and documentation. Check out the contributing guidelines. Please note that this project is released with a [Code of Conduct](https://github.com/UBC-MDS/gapminder_challenge-R/blob/main/CONDUCT.md). By contributing to this project, you agree to abide by its terms.
-
-For this project, we used `Dash` for dashboarding, `Altair` and `Plotly` for charts, and `Heroku` for deployment. Do check out the following links to learn more about them:
-
-* [Dash Python User Guide](https://dash.plotly.com/)
-* [Dash interactive visualization](https://dash.plotly.com/interactive-graphing)
-* [Altair documentation](https://altair-viz.github.io/index.html)
-* [Plotly Python documentation](https://plotly.com/python/)
-* [Deploying Dash (on Heroku)](https://dash.plotly.com/deployment)
 
 ## License and Contributors
 
